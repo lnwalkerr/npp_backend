@@ -15,6 +15,8 @@ const leaderController_1 = require("../controllers/leaderController");
 const adminValidators_1 = require("./validators/adminValidators");
 const imageController_1 = require("../controllers/imageController");
 const fileUpload_1 = require("../utils/fileUpload");
+const joinRequestController_1 = require("../controllers/joinRequestController");
+const queryController_1 = require("../controllers/queryController");
 class adminRouter {
     constructor() {
         this.router = (0, express_1.Router)();
@@ -41,6 +43,10 @@ class adminRouter {
         this.router.get("/videos/getAll", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, videoController_1.videoController.getAllVideos);
         this.router.get("/leaders/getById", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, leaderController_1.leaderController.getByIdLeader);
         this.router.get("/leaders/getAll", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, leaderController_1.leaderController.getAllLeaders);
+        this.router.get("/join-requests/getById", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, joinRequestController_1.joinRequestController.getJoinRequestById);
+        this.router.get("/join-requests/getAll", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, joinRequestController_1.joinRequestController.getAllJoinRequests);
+        this.router.get("/queries/:id", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, queryController_1.queryController.getQueryById);
+        this.router.get("/queries", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, queryController_1.queryController.getAllQueries);
         this.router.get("/getAllRepositories", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, imageController_1.getAllRepositories);
         this.router.get("/getRepositoryById", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, imageController_1.getRepositoryById);
     }
@@ -65,12 +71,17 @@ class adminRouter {
         this.router.patch("/events/update", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.EVENT_EDITOR), globalMiddleWare_1.globalMiddleWare.checkError, eventController_1.eventController.updateEvent);
         this.router.patch("/videos/update", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.VIDEO_EDITOR), globalMiddleWare_1.globalMiddleWare.checkError, videoController_1.videoController.updateVideo);
         this.router.patch("/leaders/update", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.LEADER_EDITOR), globalMiddleWare_1.globalMiddleWare.checkError, leaderController_1.leaderController.updateLeader);
+        this.router.patch("/join-requests/approve", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, joinRequestController_1.joinRequestController.approveJoinRequest);
+        this.router.patch("/join-requests/reject", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, joinRequestController_1.joinRequestController.rejectJoinRequest);
+        this.router.patch("/queries/:id", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, queryController_1.queryController.updateQuery);
     }
     deleteRoutes() {
         this.router.delete("/userType/delete", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.USERTYPE_REMOVER), globalMiddleWare_1.globalMiddleWare.checkError, userTypeController_1.userTypeController.deleteUserType);
         this.router.delete("/events/delete", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.EVENT_REMOVER), globalMiddleWare_1.globalMiddleWare.checkError, eventController_1.eventController.deleteEvent);
         this.router.delete("/videos/delete", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.VIDEO_REMOVER), globalMiddleWare_1.globalMiddleWare.checkError, videoController_1.videoController.deleteVideo);
         this.router.delete("/leaders/delete", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, (0, role_middleware_1.default)(validRolePermisson_1.PERMISSIONS.LEADER_REMOVER), globalMiddleWare_1.globalMiddleWare.checkError, leaderController_1.leaderController.deleteLeader);
+        this.router.delete("/join-requests/delete", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, joinRequestController_1.joinRequestController.deleteJoinRequest);
+        this.router.delete("/queries/:id", globalMiddleWare_1.globalMiddleWare.adminAuthenticate, globalMiddleWare_1.globalMiddleWare.checkError, queryController_1.queryController.deleteQuery);
     }
 }
 exports.default = new adminRouter().router;
